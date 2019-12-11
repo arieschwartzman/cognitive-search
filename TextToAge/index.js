@@ -20,7 +20,7 @@ module.exports = async function (context, req) {
 };
 
 function durationInDaysFromText(text) {   
-    text = text.replace("-"," "); 
+    text = text.replace(/-/g," "); 
     const split = text.split(" ");
     var i = 0;
     var ageInDays = null;
