@@ -1,4 +1,3 @@
-const { getGender } = require('gender-detection-from-name')
 
 module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
@@ -19,16 +18,22 @@ module.exports = async function (context, req) {
 
 
 function getGender(gender) {
-
-    var g = gender.trim().toLowerCase();
-    var male = ['man','male','he','his','mr','mr.','dad','uncle','brother'];
-    var female = ['woman','female','she','her','ms','miss','mrs','mother','mom','sister','aunt'];
-
-    if (male.indexOf(g) >=0) {
-        return "male";
+    if (!gender) {
+        return 'undefined';
     }
-    if (female.indexOf(g) >= 0) {
-        return "female";
+    var g = g.trim().toLowerCase();
+    g = gender.replace(/-/g," "); 
+    const split = g.split(" ");
+
+    var male = ['man','male','he','his','mr','mr.','dad','uncle','brother','boy','father','guy','fellow','gentleman','grandfather','husband','sir','son'];
+    var female = ['woman','female','she','her','ms','miss','mrs','mother','mom','sister','aunt','lady','madam','girl','daugther','gal','gentlewoman'];
+    for (var j = 0; j < split.length; j++) {
+        if (male.indexOf(split[j]) >=0) {
+            return "male";
+        }
+        if (female.indexOf(split[j]) >= 0) {
+            return "female";
+        }
     }
     return "unknown";
 }
